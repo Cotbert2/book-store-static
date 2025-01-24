@@ -18,6 +18,12 @@ class Book {
     this.bookings = [];
   }
 
+
+  addBooking(booking) {
+    this.bookings.push(booking);
+    this.updateAvailability();
+  }
+
   updateAvailability() {
     this.isAvailable = this.bookings.every((booking) => booking.isAvailable());
   }
@@ -79,6 +85,18 @@ class Booking {
     return !(currentDate >= this.startDate && currentDate <= this.endDate);
   }
 }
+//booking test
+const booking1 = new Booking( "Pepe Suarez", new Date(2021, 1, 1), new Date(2021, 1, 10));
+const booking2 = new Booking( "Luis Camacho", new Date(2024, 1, 11), new Date(2027, 1, 12));
+const booking3 = new Booking( "Antonio Panchi", new Date(2021, 1, 1), new Date(2021, 1, 10));
+const booking4 = new Booking( "Jose ", new Date(2021, 1, 1), new Date(2021, 1, 10));
+
+console.log('booking 1', booking1.isAvailable());
+console.log('booking 2', booking2.isAvailable());
+console.log('booking 3', booking3.isAvailable());
+console.log('booking 4', booking4.isAvailable());
+
+
 
 
 const book1 = new Book(1, "The Alchemist", "Paulo Coelho", "Adventure", true);
@@ -86,20 +104,22 @@ const book2 = new Book(2, "The Da Vinci Code", "Dan Brown", "Mystery", true);
 const book3 = new Book(3, "The Great Gatsby", "F. Scott Fitzgerald", "Fiction", true);
 const book4 = new Book(4, "The Catcher in the Rye", "J.D. Salinger", "Fiction", true);
 
-
 const bookStore = new BookStore();
 bookStore.addBook(book1);
 bookStore.addBook(book2);
 bookStore.addBook(book3);
 bookStore.addBook(book4);
 
+//ad one booking per book
 
-//booking test
-const booking1 = new Booking( "user1", new Date(2021, 1, 1), new Date(2021, 1, 10));
+book1.addBooking(booking1);
+book2.addBooking(booking2);
+book3.addBooking(booking3);
+book4.addBooking(booking4);
 
-const booking2 = new Booking( "user2", new Date(2024, 1, 11), new Date(2024, 1, 12));
-console.log(booking1.isAvailable());
-console.log(booking2.isAvailable());
+console.log('book store', bookStore);
+
+
 
 
 //get root elements form html file
@@ -108,7 +128,6 @@ let booksContainer = document.getElementById('books-container');
 let searchField = document.getElementById('search');
 
 /**
- * 
  *         <div class="book">
             <div>
 
