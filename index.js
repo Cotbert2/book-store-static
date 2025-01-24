@@ -122,15 +122,16 @@ let searchField = document.getElementById('search');
  */
 
 const displayCurrentBooks = (booksSet) => {
-    if(!booksSet.books ){
-        console.log('c');
-        return;
-    }
+
+    console.log('book set', booksSet);
+
+
+
 
 
     let bookContainerContent = '';
 
-    booksSet.books.forEach((book) => {
+    booksSet.forEach((book) => {
         bookContainerContent += `
         <div class="book">
             <div>
@@ -157,10 +158,16 @@ searchField.addEventListener('keyup', (event) => {
     )
 
     let searchResult = bookStore.commonSearch(event.target.value);
-    displayCurrentBooks(searchResult);
+
+    if (searchResult.length === 0) {
+        booksContainer.innerHTML = 'No books found';
+    }else {
+        displayCurrentBooks(searchResult);
+
+    }
 
     //displayCurrentBooks(bookStore.searchBookByAuthor(event.target.value));
 });
 
-displayCurrentBooks(bookStore);
+displayCurrentBooks(bookStore.books);
 
