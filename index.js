@@ -160,7 +160,9 @@ const displayCurrentBooks = (booksSet) => {
                 <p>Gener: <span>${book.gener}</span></p>
                 <p>Availability: <span>${book.isAvailable ? 'Available' : 'Not available'}</span></p>
             </div>
-            <button class="button-book">Book now</button>
+            <button class="button-book"
+            onclick="showBookById(${book.id})"
+            >Book now</button>
         </div>
         `;
     });
@@ -188,5 +190,48 @@ searchField.addEventListener('keyup', (event) => {
     //displayCurrentBooks(bookStore.searchBookByAuthor(event.target.value));
 });
 
+
+showBookById = (id) => {
+    const book = bookStore.books.find((b) => b.id === id);
+    booksContainerContent = '';
+    booksContainerContent += `
+        <div class="book">
+            <div>
+
+                <h2>${book.title}</h2>
+                <p>Author: <span>${book.author}</span></p>
+                <p>Gener: <span>${book.gener}</span></p>
+                <p>Availability: <span>${book.isAvailable ? 'Available' : 'Not available'}</span></p>
+            </div>
+
+
+        `;
+
+    //for each book in the current book
+    booksContainerContent += `<p>Bookings:</p><br>`;
+    book.bookings.forEach((booking) => {
+        booksContainerContent += `
+        <div class="booking">
+            <div>
+                <p>User: <span>${booking.user}</span></p>
+                <p>Start date: <span>${booking.startDate}</span></p>
+                <p>End date: <span>${booking.endDate}</span></p>
+                <p>Availability: <span>${booking.isAvailable() ? 'Available' : 'Not available'}</span></p>
+            </div>
+        </div>
+        `;
+    })
+    booksContainerContent += `
+    <button class="button-book" onclick="displayCurrentBooks(bookStore.books)">Back</button>
+    </div>`;
+    booksContainer.innerHTML = booksContainerContent;
+
+
+    console.log('book found', book);
+    return book;
+}
+
 displayCurrentBooks(bookStore.books);
+
+
 
